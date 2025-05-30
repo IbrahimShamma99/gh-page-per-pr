@@ -10,8 +10,8 @@ on:
       - "main"
 
 jobs:
-  build:
-    runs-on: [self-hosted, phenom-dev, 6x]
+  deploy:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
