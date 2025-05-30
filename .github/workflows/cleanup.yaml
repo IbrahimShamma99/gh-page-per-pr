@@ -9,7 +9,6 @@ permissions:
 
 jobs:
   cleanup:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -21,11 +20,6 @@ jobs:
       - name: Get branch name from PR
         run: |
           echo "BRANCH_NAME=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
-
-      #   - name: Configure Git
-      #     run: |
-      #       git config --global user.name "github-actions[bot]"
-      #       git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Switch to gh-pages branch
         run: |
