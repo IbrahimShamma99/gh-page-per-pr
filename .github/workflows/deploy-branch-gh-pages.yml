@@ -1,0 +1,25 @@
+name: Build Check
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+
+    branches:
+      - "main"
+
+jobs:
+  build:
+    runs-on: [self-hosted, phenom-dev, 6x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          destination_dir: ${{ github.ref_name }}
+          publish_branch: gh-pages
