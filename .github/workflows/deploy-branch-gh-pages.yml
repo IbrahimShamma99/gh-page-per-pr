@@ -1,0 +1,31 @@
+name: Build Check
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+    branches:
+      - "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          destination_dir: ${{ github.ref_name }}
+          publish_branch: gh-pages

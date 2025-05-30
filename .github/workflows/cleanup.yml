@@ -1,0 +1,44 @@
+name: Cleanup
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get branch name from PR
+        run: |
+          echo "BRANCH_NAME=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+
+      #   - name: Configure Git
+      #     run: |
+      #       git config --global user.name "github-actions[bot]"
+      #       git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Switch to gh-pages branch
+        run: |
+          git fetch origin gh-pages
+          git switch gh-pages || git switch --orphan gh-pages
+
+      - name: Remove the folder named after the branch
+        run: |
+          rm -rf "${{ env.BRANCH_NAME }}"
+
+      - name: Commit and push removal
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git add -A
+          git commit -m "Cleanup: remove ${{ env.BRANCH_NAME }} folder after PR merge" || echo "Cleanup committed"
+          git push origin gh-pages
