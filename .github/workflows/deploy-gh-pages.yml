@@ -15,14 +15,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Prepare Pages
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          cp -r ./public/* .
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
 
       - name: Deploy to GitHub Pages
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          cp -r ./public/* .
           git add .
           git commit -m "Deploy to GitHub Pages" || exit 0
           git push origin gh-pages
