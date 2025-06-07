@@ -27,7 +27,7 @@ jobs:
           echo "BRANCH_NAME=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@4b09552702d0b65573696410d4707c765da2630b
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
