@@ -33,7 +33,7 @@ jobs:
 
       - name: Remove the folder named after the branch
         run: |
-          rm -rf "${{ env.BRANCH_NAME }}"
+          git rm -rf "${{ env.BRANCH_NAME }}"
 
       - name: Commit and push removal
         run: |
