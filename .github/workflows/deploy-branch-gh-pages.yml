@@ -33,7 +33,7 @@ jobs:
           mkdir "${{ env.BRANCH_NAME }}"
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          cp -r ./public/* "${{ env.BRANCH_NAME }}"
+          cp -r ./public/* "${{ env.BRANCH_NAME }}"/
           git add .
           git commit -m "Deploy to GitHub Pages" || exit 0
           git push origin gh-pages
