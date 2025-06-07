@@ -21,8 +21,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: gh-pages
 
       - name: Get branch name from PR
         run: |
@@ -34,6 +32,7 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           cp -r ./public/* "${{ env.BRANCH_NAME }}"/
+          git checkout gh-pages
           git add .
           git commit -m "Deploy to GitHub Pages" || exit 0
           git push origin gh-pages
