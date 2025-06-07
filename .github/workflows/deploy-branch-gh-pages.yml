@@ -26,13 +26,20 @@ jobs:
         run: |
           echo "BRANCH_NAME=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
 
-      - name: Deploy to GitHub Pages
+      - name: Prepare Pages
         run: |
           mkdir -p "${{ env.BRANCH_NAME }}"
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           cp -r ./public/* "${{ env.BRANCH_NAME }}"/
-          git checkout gh-pages
-          git add .
+
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Deploy to GitHub Pages
+        run: |
+          git add ./"${{ env.BRANCH_NAME }}"
           git commit -m "Deploy to GitHub Pages" || exit 0
           git push origin gh-pages
