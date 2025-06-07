@@ -26,10 +26,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: gh-pages
+          clean: false
+          fetch-depth: 0
 
       - name: Deploy to GitHub Pages
         run: |
-
           git add .
           git commit -m "Deploy to GitHub Pages" || exit 0
           git push origin gh-pages
