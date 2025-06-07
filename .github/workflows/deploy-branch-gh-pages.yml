@@ -30,6 +30,7 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
+          mkdir "${{ env.BRANCH_NAME }}"
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           cp -r ./public/* "${{ env.BRANCH_NAME }}"
